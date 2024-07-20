@@ -44,12 +44,66 @@ Connect to Database on MySQL Docker Container
 mysql -u db_user -p
 ```
 
-List all user 
+## Step 3:
+Create Database with command
+
 ```sql
-SELECT USER();
+CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name
+    [create_option] ...
+
+create_option: [DEFAULT] {
+    CHARACTER SET [=] charset_name
+  | COLLATE [=] collation_name
+  | ENCRYPTION [=] {'Y' | 'N'}
+}
 ```
 
-or
+andd now, we create database **db-product**
+
 ```sql
-SELECT CURRENT_USER();
+CREATE DATABASE IF NOT EXISTS db_product
+CHARACTER SET 'utf16'
+COLLATE 'utf16_unicode_ci';
+```
+
+```sql
+SELECT DEFAULT_CHARACTER_SET_NAME, DEFAULT_COLLATION_NAME FROM INFORMATION_SCHEMA SCHEMATA WHERE SCHEMA_NAME = 'db_product';
+```
+
+????
+
+Use database
+```sql
+use db_product;
+```
+
+Show current database:
+```sql
+SELECT DATABASE();
+```
+
+Drop database:
+```sql
+DROP DATABASE db_product;
+```
+
+Show all database:
+```sql
+SHOW DATABASES;
+```
+
+## Step 04:
+Create new table with foreign key
+
+* choose default storage engine for current section.
+
+```sql
+SET default_storage_engine = InnoDB;
+```
+
+* choose database to create categories table
+
+
+```sql
+
 ```
