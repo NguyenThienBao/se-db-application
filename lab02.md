@@ -73,3 +73,11 @@ Enter db_user password (user_password)
 SELECT CURRENT_USER();
 ```
 
+* when we want to run MySQL Docker Container
+
+``` Shell
+docker container start db-mysql
+```
+
+with __db-mysql__ is docker container or container ID
+
