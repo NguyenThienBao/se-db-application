@@ -103,7 +103,49 @@ SET default_storage_engine = InnoDB;
 
 * choose database to create categories table
 
+* create categories table
+```sql
+CREATE TABLE IF NOT EXISTS tb_categories(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+) CHARACTER SET utf16 COLLATE utf16_unicode_ci ENGINE=InnoDB;
+```
+
+or 
 
 ```sql
-
+CREATE TABLE IF NOT EXISTS tb_categories(
+    id INT AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id)
+) CHARACTER SET utf16 COLLATE utf16_unicode_ci ENGINE=InnoDB;
 ```
+
+* Create **tb_product** table have foreign key to reference to id of tb_catgories
+
+
+```sql
+CREATE TABLE IF NOT EXISTS tb_products(
+  id INT AUTO_INCREMENT NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  price INT NOT NULL,
+  cat_id INT NOT NULL, 
+  PRIMARY KEY (id),
+  FOREIGN KEY (cat_id) 
+    REFERENCES tb_categories(id) 
+    ON UPDATE CASCADE 
+    ON DELETE RESTRICT
+) CHARACTER SET utf16 COLLATE utf16_unicode_ci ENGINE=InnoDB;
+```
+
+* Show table
+```sql
+SHOW TABLES;
+```
+
+* Using __DESCRIBE__ command to show table structure
+
+```sql
+DESCRIBE table_name;
+```
+
