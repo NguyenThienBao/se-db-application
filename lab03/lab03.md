@@ -1,10 +1,13 @@
 # Lab03 - Create and Access database on MySQL Docker Container
 
+https://dev.mysql.com/doc/refman/8.4/en/creating-database.html
+https://phoenixnap.com/kb/how-to-create-a-table-in-mysql
+
 ## Step 01:
 Install Client GUI tool to access Database
 
-* MySQL Workbench: link
-* Azure Data Studio: link
+* MySQL Workbench: 
+* Azure Data Studio: 
 
 Install extension:
 
@@ -150,12 +153,54 @@ DESCRIBE table_name;
 ```
 
 ## Step 05
-Insert data with command in terminal
+Using GUI Client tool to access to MySQL Docker Container
 
-* Insert data for tb_categories
+### 5.1 MySQL Workbench
 
-```sql
-INSERT INTO tb_categories(
-    
-);
-```
+Download MYSQL Workbench: [Download](https://dev.mysql.com/downloads/workbench/)
+
+![Home Screen of MYSQL Workbench](./images/img_01.png)
+
+* Create Connect to Database with MySQL Workbench
+
+![Create Connection](./images/img_02.png)
+
+* Click to "Test Connection"
+
+![Connect Successfully](./images/img_03.png)
+
+Click to Ok button to save the connection
+
+* Connect to database (Database Schema db-product)
+
+Click connection which is created above step to connect to the database
+
+![Connect to the database](./images/img_04.png)
+
+* Using MySQL Workbench to access database (database schema db_product)
+
+Create Query to access to the database.
+
+![Create and Execute Query](./images/img_05.png)
+
+* Create EER model (Database Diagram) with MySQL Workbench
+
+Create EER model from Database
+
+![Create EER](./images/img_06.png)
+
+*Using connection which is create to the database
+
+![Choose connection](./images/img_07.png)
+
+Click "Continue" button to move to next step
+
+*Choose DB to create EER model
+
+![Choose database](./images/img_08.png)
+
+CLick "Continue" button to complete the wizard.
+
+*** The EER is the same as the picture below. ***
+
+![EER Model](./images/img_09.png)
