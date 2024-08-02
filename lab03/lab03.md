@@ -204,3 +204,39 @@ CLick "Continue" button to complete the wizard.
 *** The EER is the same as the picture below. ***
 
 ![EER Model](./images/img_09.png)
+
+
+### 5.2 Azure Data Studio
+
+Download Azure Data Studio:  https://azure.microsoft.com/en-us/products/data-studio
+
+* Install Extension to access MySQL:
+  1. MySQL
+
+![Install MySQL Extension](./images/img_10.png)
+
+  2. SQL Database Project Extension
+
+![Install SQL Database Project Extension](./images/img_11.png)
+
+* Create connection to *** db_product *** database on MySQL Docker Container
+
+Fill in information for connection 
+
+![Connection Information](./images/img_12.png)
+
+Change port to 3307 to forward port to port 3306 of MySQL Docker Container
+
+Click to "Advance..." button to be able to change the port.
+
+![Change port to 3307](./images/img_13.png)
+
+Click to "Connect" button to connect to the db_product in MySQL Docker Container
+
+* Access to *** db_product ***
+
+![Connect to db_product in MySQL Docker Container](./images/img_14.png)
+
+* Create and Execute Query
+
+![Create and execute query](./images/img_15.png)
