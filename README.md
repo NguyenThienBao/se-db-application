@@ -11,3 +11,5 @@ Course for database application
 ## 2. Labs:
 
 * Lab 01 - Set Up mySQL with Docker.
+* Lab 02 - Creat db-user to access to mySQL with mySQL Docker Container.
+* Lab 03 - Create and accesss to database with mySQL Docker Container.

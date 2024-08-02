@@ -27,7 +27,7 @@ docker exec -it db-mysql bash
 
 * Login to MySQL Database.
 
-``` shell
+``` sql
 mysql -u root -p 
 ```
 
@@ -35,13 +35,13 @@ Enter root-password (admin123) after enter the command above.
 
 * Create MySQL Database User
 
-``` shell
+``` sql
 CREATE USER 'db_user'@'localhost' IDENTIFIED BY 'user_password'
 ```
 
 * Set permission for db_user to access to database.
 
-``` shell
+``` sql
 GRANT ALL PRIVILEGES On *.* TO "db_user'@'localhost'
 ```
 * __db_user__: is the database user which is used for aaccess to database.
@@ -49,19 +49,19 @@ GRANT ALL PRIVILEGES On *.* TO "db_user'@'localhost'
 
 * Show all users on mySQL
 
-``` shell
+``` sql
 SELECT user, host FROM mysql.user;
 ```
 
 * Log out MySQL Database (with root user)
 
-``` shell
+``` sql
 \q
 ```
 
 * Log in into new user database (db_user)
 
-``` shell
+``` sql
 mysql -u db-user -p
 ```
 
@@ -71,6 +71,31 @@ Enter db_user password (user_password)
 
 ``` shell
 SELECT CURRENT_USER();
+```
+
+list all user
+``` sql
+SELECT host, user FROM mysql.user;
+```
+
+## To change user password, using root user and run command
+* Connect Database with **root**
+
+```shell
+mysql -u root -p
+```
+
+enter root paswword (admin123)
+
+* change db-user password to 'new-password'
+
+```sql
+ALTER USER 'username'@'localhost' IDENTIFIED BY 'new-password';
+```
+
+* Reload Grant Table
+```sql
+FLUSH PRIVILEDGES
 ```
 
 * when we want to run MySQL Docker Container
