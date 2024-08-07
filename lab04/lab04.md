@@ -1,6 +1,7 @@
 # Lab04 - Basic MySQL Commands
 
 Ref: https://dev.mysql.com/doc/search/?d=201&p=1&q=data+mani
+Ref: https://www.w3schools.com/MySQL/default.asp
 
 ## 1 - Set Working Database
 
@@ -119,4 +120,99 @@ WHERE p.cat_id = ( SELECT id
 UPDATE tb_products
 SET name = "Galaxy S24"
 WHERE name like '%GALAXY S2';
+```
+
+## 6 - Create Store Procedure on MySQL
+
+ref: https://dev.mysql.com/doc/refman/8.4/en/create-procedure.html
+
+* Create store procedure
+
+```sql
+CREATE PROCEDURE sp_get_all_products()
+BEGIN 
+    SELECT * FROM tb_products;
+END;
+```
+
+* Use the stored procedure to get all data of "tb_products"
+
+```sql
+CALL sp_get_all_products();
+```
+
+* DROP stored procedure
+
+```sql
+DROP PROCEDURE sp_get_all_products;
+```
+
+*** You CANNOT update or change Stored Procedure in MySQL
+
+* Get information of one product by product_id
+
+```sql
+CREATE PROCEDURE sp_get_product_by_id(
+    IN id int
+)
+BEGIN 
+    SELECT p.id, p.name, p.price, c.name
+    FROM tb_products p LEFT JOIN tb_categories c ON p.cat_id = c.id
+    WHERE p.id = id;
+END;
+
+---
+
+CALL sp_get_product_by_id(10);
+```
+
+* CREATE PROCEDURE to Count Products which have the same "mobile" category's name
+
+```sql
+CREATE PROCEDURE sp_get_product_by_categories(
+    IN cat_name VARCHAR(50),
+    OUT num_of_products int
+)
+BEGIN 
+    SELECT COUNT(p.id) INTO num_of_products
+    FROM tb_products AS p LEFT JOIN tb_categories AS c ON p.cat_id = c.id
+    WHERE c.name = cat_name;
+END;
+
+--- execute stored procedure
+
+CALL sp_get_product_by_categories('mobile', @num_of_products);
+
+--- Display output parameter
+
+SELECT @num_of_products;
+```
+
+* DROP PROCEDURE
+
+```sql
+DROP PROCEDURE [procedure] IF EXISTS;
+```
+
+## 7 - Create Function in MYSQL
+
+* Create function to count products by categories ID.
+
+```sql
+SET GLOBAL log_bin_trust_function_creators = 1;
+
+--- Set deterministic
+
+CREATE FUNCTION count_all()
+RETURNS INT
+BEGIN
+    DECLARE total INT;
+    SET total = 0;
+    SELECT COUNT(id) INTO total FROM tb_products;
+    RETURN total;
+END;
+
+--- Display out put
+
+SELECT count_all();
 ```
