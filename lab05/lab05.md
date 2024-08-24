@@ -83,3 +83,42 @@ SHOW TABLES;
 SELECT p.id, p.name, p.price, c.name
 FROM tb_products p LEFT JOIN tb_categories c ON p.cat_id = c.id;
 ```
+
+## 2 - Using GUI Tool
+
+### 2.1 - MySQL Workbench
+
+#### 2.1.1 - Export Database with MySQL Workbench
+
+* Connect to MySQL Docker Container with MySQL Workbench
+
+![Connect to Databaase with MySQL Workbench](./images/img_01.png)
+
+* In MySQL Workbench, on the "Administator" Panel, Select "Data Export" and tick Databases "db_product"
+
+![Choose Data Export](./images/img_02.png)
+
+* In right panel of "Administration" Data Export", Tick database "db_product" and specification tables/all database, dump "Store Procedure/Trigger/Function" and "Data". After that, choose host location to store sql script files which will be exported.
+
+![Specify Configuration to dump database](./images/img_03.png)
+
+> Edit SQL Script file because the script contain special code which is used to define DELIMITER to create function.
+> * Change name of database
+> ```
+> CREATE DATABASE  IF NOT EXISTS `db_product_workbench` /*!40100 DEFAULT CHARACTER SET utf16 COLLATE utf16_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */; USE `db_product_workbench`;
+> ```
+> * add the SQL command before the line to create "Delimiter;;"
+> ``` sql
+>SET GLOBAL log_bin_trust_function_creators = 1;
+> ```
+
+
+#### 2.1.2 - Import Database with MySQL Workbench
+
+* In MySQL Workbench, on the "Administrator" panel, choose "Data Import/ Restore"
+
+* Specific database to import
+
+![Specific databaase to import](./images/img_04.png)
+
+
