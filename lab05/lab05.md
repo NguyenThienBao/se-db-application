@@ -84,11 +84,9 @@ SELECT p.id, p.name, p.price, c.name
 FROM tb_products p LEFT JOIN tb_categories c ON p.cat_id = c.id;
 ```
 
-## 2 - Using GUI Tool
+## 2 - Using GUI Tool - MySQL Workbench
 
-### 2.1 - MySQL Workbench
-
-#### 2.1.1 - Export Database with MySQL Workbench
+#### 2.1 - Export Database with MySQL Workbench
 
 * Connect to MySQL Docker Container with MySQL Workbench
 
@@ -113,12 +111,14 @@ FROM tb_products p LEFT JOIN tb_categories c ON p.cat_id = c.id;
 > ```
 
 
-#### 2.1.2 - Import Database with MySQL Workbench
+#### 2.2 - Import Database with MySQL Workbench
 
 * In MySQL Workbench, on the "Administrator" panel, choose "Data Import/ Restore"
 
 * Specific database to import
 
 ![Specific databaase to import](./images/img_04.png)
+
+> Azure Data Studio only Export and Import Database for MS SQL Server
 
 
