@@ -155,6 +155,143 @@ BEGIN
 END;
 
 call ds_KiemTraGiaoDichTaiKhoan;
+```
 
+## 3 - Trigger
+Syntax of Trigger
+
+```sql
+CREATE TRIGGER trigger_name trigger_time trigger_event
+ ON table_name
+ FOR EACH ROW
+ BEGIN
+ ...
+ END;
+```
+
+* "trigger_name" is name of trigger
+* "trigger_time" is time which the trigger got actived
+    * "BEFORE" - set execute trigger before data change
+    * "AFTER" - set execute trigger after data change
+* "trigger_event" is follow event to change data such as INSERT, UPDATE, DELETE
+* Keyword "OLD" is reference data before changes.
+* Keyword "NEW" is reference data after changes.
+
+#01 Example: create trigger to insert "NgayLap, TongThanhTien, MaTinhTrang" before insert data into DonDatHang table.
+
+```sql
+DROP TRIGGER IF EXISTS trg_after_insert_dondathang;
+
+CREATE TRIGGER trg_after_insert_dondathang 
+BEFORE INSERT ON DonDatHang
+FOR EACH ROW
+BEGIN
+    SET NEW.NgayLap = NEW();
+    SET NEW.TongThanhTien = 0;
+END;
+
+--------------------------------------------------------
+
+SELECT * FROM DonDatHang;
+
+INSERT INTO DonDatHang(MaDonDatHang, MaTaiKhoan, MaTinhTrang) VALUES ("24092245", 1, 1);
+
+SELECT * FROM DonDatHang;
+```
+
+#02 Example: when insert product information to "ChiTietDonHang", using trigger to update "TongThanhTien" with "TongThanhTien += GiaSanPham * SoLuong" 
+
+```sql
+
+DROP TRIGGER IF EXISTS trg_after_insert_chitietdondathang;
+CREATE TRIGGER trg_after_insert_chitietdondathang AFTER INSERT ON ChiTietDonDatHang
+FOR EACH ROW
+BEGIN
+    UPDATE DonDatHang
+    SET TongThanhTien = TongThanhTien + (NEW.GiaBan * NEW.SoLuong)
+    WHERE MaDonDatHang = NEW.MaDonDatHang;
+END;
+
+--------------------------------------------------------
+
+SELECT * FROM DonDatHang;
+
+INSERT INTO ChiTietDonDatHang(MaChiTietDonDatHang, MaDonDatHang, MaSanPham, SoLuong, GiaBan) VALUES ('2409224501', '24092245', 9, 2, 300000);
+
+SELECT * FROM DonDatHang;
+SELECT * FROM ChiTietDonDatHang;
+DELETE FROM ChiTietDonDatHang WHERE MaChiTietDonDatHang = "2409224505";
 
 ```
+
+#03 Example: when update "SoLuong" on "ChiTietDonHang", using trigger to update "TongThanhTien" with "TongThanhTien" 
+
+```sql
+DROP TRIGGER IF EXISTS trg_after_update_chitietdonhang;
+CREATE TRIGGER trg_after_update_chitietdonhang AFTER UPDATE ON ChiTietDonDatHang
+FOR EACH ROW
+BEGIN
+    UPDATE DonDatHang
+    SET TongThanhTien = TongThanhTien + (NEW.GiaBan * (NEW.SoLuong - OLD.SoLuong))
+    WHERE MaDonDatHang = NEW.MaDonDatHang;
+END;
+
+--------------------------------------------------------
+
+SELECT * FROM DonDatHang;
+
+UPDATE ChiTietDonDatHang
+SET SoLuong = 1
+WHERE MaChiTietDonDatHang = '2409224502';
+
+SELECT * FROM DonDatHang;
+```
+
+#04 Example: when update "ChiTietDonHang", using trigger to update "TongThanhTien" with "TongThanhTien" 
+
+```sql
+DROP TRIGGER IF EXISTS trg_after_update_chitietdonhang;
+CREATE TRIGGER trg_after_update_chitietdonhang AFTER UPDATE ON ChiTietDonDatHang
+FOR EACH ROW
+BEGIN
+    UPDATE DonDatHang
+    SET TongThanhTien = TongThanhTien + (NEW.GiaBan * (NEW.SoLuong - OLD.SoLuong))
+    WHERE MaDonDatHang = NEW.MaDonDatHang;
+END;
+
+--------------------------------------------------------
+
+SELECT * FROM DonDatHang;
+
+UPDATE ChiTietDonDatHang
+SET SoLuong = 1
+WHERE MaChiTietDonDatHang = '2409224502';
+
+SELECT * FROM DonDatHang;
+SELECT * FROM ChiTietDonDatHang;
+DELETE FROM ChiTietDonDatHang WHERE MaChiTietDonDatHang = "2409224505";
+```
+
+#05 Example: when delete "ChiTietDonHang", using trigger to update "TongThanhTien" with "TongThanhTien" 
+
+```sql
+DROP TRIGGER IF EXISTS trg_after_delete_chitietdonhang;
+CREATE TRIGGER trg_after_update_chitietdonhang AFTER DELETE ON ChiTietDonDatHang
+FOR EACH ROW
+BEGIN
+    UPDATE DonDatHang
+    SET TongThanhTien = TongThanhTien - (OLD.GiaBan * OLD.SoLuong);
+    WHERE MaDonDatHang = OLD.MaDonDatHang;
+END;
+
+--------------------------------------------------------
+
+SELECT * FROM DonDatHang;
+
+DELETE FROM ChiTietDonDatHang
+WHERE MaChiTietDonDatHang = "2409224502";
+
+SELECT * FROM DonDatHang;
+SELECT * FROM ChiTietDonDatHang;
+```
+
