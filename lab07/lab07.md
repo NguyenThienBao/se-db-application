@@ -34,3 +34,8 @@ WHERE h.TenHangSanXuat = "Lamaze";
 -------------------------------------------------------------------
 SELECT * FROM HangSanXuat_Lamaze;
 ```
+* Drop a View
+
+```sql
+DROP VIEW IF EXISTS HangSanXuat_Lamaze;
+```
